@@ -1,0 +1,32 @@
+<?php ob_start() ?>
+<script type="text/javascript">
+/* Filename: <?= __FILE__ ?> */
+(function () {
+    var hideClickedButtonPopup = function (event) {
+        var popupHiderDiv = event.target.parentElement.parentElement.parentElement.parentElement;
+        if (-1 === popupHiderDiv.className.indexOf('hidden')) {
+            popupHiderDiv.className = popupHiderDiv.className += ' hidden'; 
+        }
+    };
+    var hidePopupButtons = $('a.<?= $this->hidePopupButtonClass ?>');
+    var hidePopupButtonsLength = hidePopupButtons.length;
+    for (var i=0; i < hidePopupButtonsLength; i++) {
+        if (hidePopupButtons[i].addEventListener) {
+            hidePopupButtons[i].addEventListener('click', hideClickedButtonPopup, false); 
+        } else if (hidePopupButtons[i].attachEvent)  {
+            hidePopupButtons[i].attachEvent('onclick', hideClickedButtonPopup);
+        }
+    }
+    // Listen to event gbilivhShowPopup, and show popup
+    gbili.event.addListener('gbilivhShowPopup', function (event) {
+        var popupHiderDiv = event.target.parentElement.parentElement.parentElement.parentElement;
+        if (-1 !== popupHiderDiv.className.indexOf('hidden')) {
+            popupHiderDiv.className = popupHiderDiv.className.replace('hidden', ''); 
+        }
+    }, 0);
+})();
+</script>
+<?php $view = ($this instanceof \Zend\View\Helper\AbstractHelper)? $this->getView() : $this ?>
+<?php $view->scriptalicious()->addInline('gbilivh_formpopup_base', ob_get_clean()) 
+    ->addDependency('gbilivh_formpopup_base', 'gbili') ?>
+

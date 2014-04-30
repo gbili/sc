@@ -1,0 +1,35 @@
+<?= $this->doctype() ?>
+<html lang="<?php echo $this->lang() ?>">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('Simple markers')->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0, user-scalable=no')
+                             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge') ?>
+
+        <!-- Le styles -->
+        <?= $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                 ->prependStylesheet($this->basePath() . '/css/style.css')
+                 //Only add when in media forms
+                 ->prependStylesheet($this->basePath() . '/css/image-picker.css') ?>
+
+        <!-- Scripts -->
+        <?php $this->scriptalicious()
+                ->addSrc('jQuery',    $this->basePath() . '/js/jquery.min.js')
+                ->addSrc('respond',   $this->basePath() . '/js/respond.min.js')->addDependency('respond', 'jQuery')->setCondition('lt IE 9')
+                ->addSrc('html5shiv', $this->basePath() . '/js/html5shiv.js')->addDependency('html5shiv', 'respond')->setCondition('lt IE 9') ?>
+    </head>
+    <body>
+        <div id="map-canvas"></div>
+        <div class="map-canvas-height-cloner"></div>
+        <div id="content">
+            <?= $this->content ?>
+            <a href="#" class="back-to-top"><?= $this->translate('Back to Map') ?></a>
+            <div id="footer-scripts">
+                <?= $this->scriptalicious()->renderAll() ?>
+            </div>
+            <footer>
+                <p>&copy; 2009 - <?= date('Y') ?> <?php echo $this->translate('by', 'sc')?> sc.com. <?= $this->translate('All rights reserved.', 'sc') ?></p>
+            </footer>
+        </div>
+    </body>
+</html>

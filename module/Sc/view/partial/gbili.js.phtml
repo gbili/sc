@@ -1,0 +1,41 @@
+<?php ob_start() ?>
+<script type="text/javascript">
+/* File: <?= substr(__FILE__, strrpos(__FILE__, '/')) ?>*/
+var gbili;
+gbili = {
+    toType: function(obj) {
+        return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+    },
+    event: {
+        events      : {},
+
+        addListener : function (eventName, callback, priority) {
+            if (!this.events.hasOwnProperty(eventName)) {
+                this.events[eventName] = {
+                    listeners : []
+                };
+            }
+            this.events[eventName].listeners[priority] = callback;
+        },
+
+        trigger: function (eventName, params) {
+            if (!this.events[eventName]) {
+                return;
+            }
+            var triggeredEvent = this.events[eventName];
+            var sortedEventListeners = triggeredEvent.listeners.sort();
+
+            // Listeners can access event.params and event.target 
+            triggeredEvent.params = params.params || {};
+            triggeredEvent.target = triggeredEvent.target || params.target || (params.targetGenerator && params.targetGenerator()) || {};
+
+            for (i in sortedEventListeners) {
+                listenerCallback = sortedEventListeners[i];
+                listenerCallback(triggeredEvent);
+            }
+        },
+    },
+};
+<?php // This marker if not null, contains the twitteable position ?>
+</script>
+<?php $this->scriptalicious()->addInline('gbili', ob_get_clean()) ?>

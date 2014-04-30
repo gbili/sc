@@ -1,0 +1,11 @@
+<?php $masonryColumnWidth = 240 ?>
+<div class="brick-wall status"> 
+    <ul class="please_masonize_<?= $masonryColumnWidth ?>">
+    <?php foreach ($statuses as $status) : ?>
+       <li>
+            <h3><?= $status->created_at ?></h3>
+            <p><?= $status->text ?></p>
+       </li>
+    <?php endforeach ?>
+    </ul>
+</div>

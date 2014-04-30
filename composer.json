@@ -1,0 +1,21 @@
+{
+    "name": "gbili/sc",
+    "description": "Skeleton Application for ZF2",
+    "license": "BSD-3-Clause",
+    "repositories": [
+        {
+            "type":"vcs",
+            "url":"https://github.com/gbili/gfw"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "dev-master",
+        "zendframework/zendservice-twitter": "dev-master",
+        "gbili/gfw": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+        }
+    }
+}

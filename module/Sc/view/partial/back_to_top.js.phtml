@@ -1,0 +1,23 @@
+<?php ob_start() ?>
+<script type="text/javascript">            
+/* File: <?= substr(__FILE__, strrpos(__FILE__, '/')) ?>*/
+    $(document).ready(function() {
+        var offset = 220;
+        var duration = 500;
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > offset) {
+                $('.back-to-top').fadeIn(duration);
+            } else {
+                $('.back-to-top').fadeOut(duration);
+            }
+        });
+        
+        $('.back-to-top').click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, duration);
+            return false;
+        })
+    });
+</script>
+<?php $this->scriptalicious()->addInline('back_to_top', ob_get_clean())
+                         ->addDependency('back_to_top', 'jQuery')?>

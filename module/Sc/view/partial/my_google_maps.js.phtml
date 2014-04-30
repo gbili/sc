@@ -1,0 +1,94 @@
+<?php $config = $this->googleMapsApiConfig(true) ?>
+<?php ob_start() ?>
+<script type="text/javascript">
+/* File: <?= substr(__FILE__, strrpos(__FILE__, '/')) ?>*/
+
+<?php // This marker if not null, contains the twitteable position ?>
+    <?php // On load, initialize map?>
+    function <?= $config['query_params']['callback']?>() {
+        <?php // Create map ?>
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            scrollwheel: false,
+            zoom: <?= $config['map']['zoom'] ?>,
+            center: new google.maps.LatLng(<?= $config['map']['lat'] ?>, <?= $config['map']['lng'] ?>),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        <?php // Add all markers, using config array?>
+        <?php foreach ($config['places'] as $identifier => $place) : ?> 
+        new google.maps.Marker({
+            position: new google.maps.LatLng(<?= $place['lat']?>, <?= $place['lng']?>),
+            map: map,
+            title: '<?= $place['title']?>',
+            <?php if (isset($place['icon'])) : ?>
+                <?= $this->customMarker('icon', $place['icon'], $config, ',')?> 
+                <?= $this->customMarker('shape', $place['icon'], $config)?> 
+            <?php endif ?>
+        });
+        <?php endforeach ?>
+
+        <?php // Center the map, by asking user for HTML5 geolocation ?>
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = new google.maps.LatLng(
+                    position.coords.latitude,
+                    position.coords.longitude
+                );
+                var isInBoundaries = inBoundaries(pos);
+                message = (isInBoundaries && 'Location found using HTML5.') || 'Location Not Accurate.';
+                var infowindow = new google.maps.InfoWindow({
+                    map: map,
+                    position: (isInBoundaries && pos) || map.center,
+                    content: message
+                });
+                if (isInBoundaries) {
+                    map.setCenter(pos);
+                }
+            }, function() {
+                handleNoGeolocation(true);
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+        }
+
+        // Allow user to set a marker where he wants to tweet
+        gbili.event.addListener('twittableLocationPlaced', function (event) {
+            var location = event.params.location;
+            if ( event.target.position != location ) {
+                event.target.setPosition(location);
+            }
+        }, 0);
+
+        google.maps.event.addListener(map, 'click', function(event) {
+            gbili.event.trigger('twittableLocationPlaced', {
+                params: {
+                    location: event.latLng
+                },
+                targetGenerator : function () {
+                    return new google.maps.Marker({
+                        position: event.latLng,
+                        map: map
+                    });
+                }
+            });
+        });
+    }
+
+    function inBoundaries(position) {
+        var lat=position.lat, lng=position.lng;
+        var min = {
+            lat : <?= $config['geolocation']['boundaries']['min']['lat'] ?>,
+            lng : <?= $config['geolocation']['boundaries']['min']['lng'] ?>,
+        };
+        var max = {
+            lat : <?= $config['geolocation']['boundaries']['max']['lat'] ?>,
+            lng : <?= $config['geolocation']['boundaries']['max']['lng'] ?>,
+        };
+        return lat > min.lat && lat < max.lat && lng > min.lng && lng < min.lng;
+    }
+</script>
+<?php $this->scriptalicious()->addInline('my_google_maps', ob_get_clean()) 
+                             ->addDependency('my_google_maps', 'gbili') ?>
+<?php $this->scriptalicious()->addSrc('googlemapsapi', 'https://maps.googleapis.com/maps/api/js?' . http_build_query($config['query_params']))
+                             ->addDependency('googlemapsapi', 'my_google_maps') ?>

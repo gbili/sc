@@ -1,0 +1,35 @@
+<?php $form->setAttribute('action', $this->url('sc_sc_statusupdate_route', array(), true)) ?>
+<?php $this->formActionPrepare($form) ?>
+<?= $this->wrapInPopup($this->renderForm($form), true) ?>
+
+<?php $masonryColumnWidth = 240 ?>
+<?php $placesByType = $this->googleMapsApiConfig()->getPlacesByType(); ?>
+<?php $icons = $this->googleMapsApiConfig()->getIcons(); ?>
+<ul class="tabs">
+    <?php foreach ($placesByType as $type => $places) : ?>
+    <li><a href="#<?= $type ?>"><?= ucfirst($type) ?></a></li>
+    <?php endforeach ?>
+</ul>
+<?php foreach ($placesByType as $type => $places) : ?>
+<div id="<?= $type ?>" class="brick-wall"> 
+    <ul class="please_masonize_<?= $masonryColumnWidth ?>">
+    <?php foreach ($places as $place) : ?>
+       <li>
+            <h3><?= $place['title'] ?></h3>
+            <h4><?= $place['type'] ?></h4>
+            <?php if (isset($place['icon'])) : ?>
+                <img src="<?= $icons[$place['icon']]['url'] ?>" alt="<?= 'icon for ' . $place['title'] ?>">
+            <?php endif ?>
+            <?= $place['description'] ?>
+       </li>
+    <?php endforeach ?>
+    </ul>
+</div>
+<?php endforeach ?>
+
+<?php require_once __DIR__ . '/../../partial/init_masonry.js.phtml' ?> 
+<?php require_once __DIR__ . '/../../partial/jquery_tabs.js.phtml' ?> 
+<?php require_once __DIR__ . '/../../partial/gbili.js.phtml' ?> 
+<?php require_once __DIR__ . '/../../partial/my_google_maps.js.phtml' ?> 
+<?php require_once __DIR__ . '/../../partial/twitter_init.js.phtml' ?> 
+<?php require_once __DIR__ . '/../../partial/back_to_top.js.phtml' ?> 

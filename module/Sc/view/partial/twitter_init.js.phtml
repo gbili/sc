@@ -1,0 +1,67 @@
+<?php $this->scriptalicious()->addSrc('jQuery_form', '/js/jquery.form.js')
+    ->addDependency('jQuery_form', 'jQuery') ?>
+
+<?php $formId = 'post_geo_status'; ?>
+<?php $placeIdInputName = 'tegp_place_id'; ?>
+
+<?php ob_start() ?>
+<script type="text/javascript">
+/* File: <?= substr(__FILE__, strrpos(__FILE__, '/')) ?>*/
+var tegp = {
+    updateFormHiddenInputs : function (latStr, lngStr, zoomStr) {
+        $('#<?= $formId ?> input[name="place[lat]"]').val(latStr);
+        $('#<?= $formId ?> input[name="place[long]"]').val(lngStr);
+        $('#<?= $formId ?> input[name="place[zoom]"]').val(zoomStr);
+    },
+};
+
+gbili.event.addListener('twittableLocationPlaced', function (event) {
+    var latStr = event.target.getPosition().lat().toString().substring(0, 9);
+    var lngStr = event.target.getPosition().lng().toString().substring(0, 10);
+    var zoomStr = event.target.map.zoom.toString();
+
+    tegp.updateFormHiddenInputs(latStr, lngStr, zoomStr);
+
+    gbili.event.trigger('gbilivhShowPopup', {
+        target: document.getElementById('<?= $formId ?>'),
+    });
+}, 1);
+
+$(function() {
+    // Register a 'submit' event listener on the form to perform the AJAX POST
+    $('#<?= $formId ?>').on('submit', function(e) {
+        e.preventDefault();
+        // Perform the submit
+        gbili.event.trigger('tegpForm:Submitted');
+        //$.fn.ajaxSubmit.debug = true;
+        $(this).ajaxSubmit({
+            beforeSubmit: function(arr, $form, options) {
+                // Notify backend that submit is via ajax
+                //arr.push({ name: "isAjax", value: "1" });
+            },
+            success: function (response, statusText, xhr, $form) {
+                gbili.event.trigger('tegpForm:ResponseRecieved');
+                //All files uploaded correctly
+                if (1 === response.status) {
+                    gbili.event.trigger('tegpForm:ResponseValid', response);
+                } else if (2 === response.status) {
+                    console.log(response);
+                } else if (0 === response.status) {
+                    console.log(response);
+                } else {
+                    gbili.event.trigger('tegpForm:ResponseNotValid', response);
+                }
+            },
+            error: function(a, b, c) {
+                // NOTE: This callback is *not* called when the form is invalid.
+                // It is called when the browser is unable to initiate or complete the ajax submit.
+                // You will need to handle validation errors in the 'success' callback.
+                gbili.event.trigger('tegpForm:NetworkError', response);
+            }
+        });
+    });
+});
+</script>
+<?php $this->scriptalicious()->addInline('twitter_init', ob_get_clean())
+           ->addDependency('twitter_init', 'gbili')
+           ->addDependency('twitter_init', 'jQuery_form') ?>

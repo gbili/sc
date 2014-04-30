@@ -1,0 +1,5 @@
+<?php ob_start() ?>
+<script type="text/javascript">
+</script>
+<?php $this->scriptalicious()->addInline('my_google_maps', ob_get_clean())
+                             ->addDependency('googlemaps_canvas_height_cloner', 'my_google_maps') ?>

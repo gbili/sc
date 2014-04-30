@@ -1,0 +1,248 @@
+/* End General Styles */
+/* H */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+h1, .h1 {
+    margin-bottom: 10px;
+    margin-top: 20px;
+    font-size: 24px;
+}
+h2, .h2 {
+    margin-bottom: 8px;
+    margin-top: 16px;
+    font-size: 20px;
+}
+h3, .h3 {
+    margin-bottom: 6px;
+    margin-top: 13px;
+    font-size: 17px;
+}
+h4, .h4 {
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+ul {
+    padding-left: 15px;
+    list-style-type: none;
+}
+/* End General Styles */
+
+/* Bootstrap styles*/
+.form-group {
+    margin: 0 0 20px 0;
+} 
+.form-group label {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+} 
+.form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.btn {
+    -moz-user-select: none;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: pointer;
+}
+
+/* End Bootstrap styles*/
+
+/* Popup Wrapper */
+.hidden {
+    display: none;
+}
+
+a.hide-popup {
+    color: #BEBEBE;
+    cursor: pointer;
+    float: right;
+    font-size: 29px;
+    left: 17px;
+    position: relative;
+    text-decoration: none;
+    top: -26px;
+}
+
+a.hide-popup:hover {
+    color: #EB4A4A;
+}
+
+.popup-row {
+    position: fixed;
+    display: table;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.popup-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.popup-content {
+    background: #FFFFFF;
+    width: 500px;
+    padding: 33px;
+    margin: auto;
+}
+
+@media (min-width: 738px) && (min-height: 900px) {
+}
+@media (max-width: 737px) && (max-height: 600px) {
+}
+
+/* End Popup Wrapper */
+
+/* Twitter button */
+#custom-tweet-button {
+    background: #234234;
+}
+#custom-tweet-button a {
+    display: block;
+    padding: 20px 59px 29px 209px;
+    background: url('https://twitter.com/favicons/favicon.ico') 1px center no-repeat;
+    border: 1px solid #ccc;
+}
+/* End Twitter button */
+
+/* Tabs */
+p, h3 { 
+    margin-bottom:15px;
+}
+.tabs li {
+    list-style:none;
+    display:inline;
+}
+.tabs a {
+    padding:5px 10px;
+    display:inline-block;
+    background:#EEE;
+    color:#000;
+    text-decoration:none;
+}
+.tabs a.active {
+    background:#999;
+    color:#FFF;
+}
+/* End Tabs */
+
+
+/* Masonry */
+/* This makes masonry bricks stick together */
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.please_masonize_240 > li img {
+    float: right;
+}
+
+ul.please_masonize_240 {
+    padding: 0 !important;
+}
+.please_masonize_240 > li {
+    background: #FFFFFF;
+    max-width: 230px;
+    padding: 16px;
+    margin: 0 0 10px 10px;
+    list-style-type: none;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
+    box-shadow: 2px 7px 10px -9px;
+}
+.please_masonize_240 > li > a > img {
+    max-width: 210px; /* compensate for li padding -10 -10 = -20*/
+}
+/* End Masonry*/
+
+/* Layout */
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px
+}
+
+#map-canvas {
+    height: 80%;
+    width: 100%;
+    position: fixed !important;
+}
+
+.map-canvas-height-cloner {
+    height: 80%; /*Use js to clone exactly the gmap height*/
+    position: relative;
+    z-index: -1000;
+    background: none repeat scroll 0 0 #B8DFFF;
+}
+
+#content {
+    box-shadow: 0 8px 22px #5E75DC/*#5E75A5*/;
+    min-height: 700px;
+    background-color: #FFF;
+    position: relative;
+    padding: 1px 15px;
+    width: 100%;
+}
+
+footer {
+   margin: 90px 10px 0 40px;
+}
+/* End Layout */
+
+/* Back to top */
+div#page {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 2em;
+    right: 0px;
+    text-decoration: none;
+    color: #000000;
+    background-color: rgba(235, 235, 235, 0.80);
+    font-size: 12px;
+    padding: 1em;
+    display: none;
+}
+.back-to-top:hover {    
+    background-color: rgba(135, 135, 135, 0.50);
+}   
+/* End Back to top */
