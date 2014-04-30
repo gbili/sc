@@ -12,7 +12,8 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "dev-master",
         "zendframework/zendservice-twitter": "dev-master",
-        "gbili/gfw": "dev-master"
+        "gbili/gfw": "dev-master",
+        "gbili/gbili-viewhelper": "dev-master"
     },
     "autoload": {
         "psr-0": {
